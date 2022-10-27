@@ -78,7 +78,7 @@ if __name__ == '__main__':
     # Get redis instance
     r = redis_connect()
     # Get emails
-    recipients = get_emails()
+    recipients = get_emails(r)
     # Create monitor object
     monitor = WebpageMonitor(recipients, verbose=True)
     # Run monitor
