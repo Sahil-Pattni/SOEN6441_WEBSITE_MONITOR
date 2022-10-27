@@ -11,13 +11,15 @@ class WebpageMonitor:
     """
     TODO:
     """
-    def __init__(self, url='http://users.encs.concordia.ca/~cc/soen6441/') -> None:
+    def __init__(self, url='http://users.encs.concordia.ca/~cc/soen6441/', verbose=False) -> None:
         self.url = url
         self.frequency = 60
         self.last_hash = None
+        self.verbose = verbose
 
     def __log(self, message):
-        print(f'LOG: {message}')
+        if self.verbose:
+            print(f'LOG: {message}')
 
     def get_hash(self):
         """
