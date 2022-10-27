@@ -2,6 +2,7 @@
 import time
 import hashlib
 import requests
+from email_client import EmailClient
 from requests.auth import HTTPBasicAuth
 import os
 
@@ -11,11 +12,12 @@ class WebpageMonitor:
     """
     TODO:
     """
-    def __init__(self, url='http://users.encs.concordia.ca/~cc/soen6441/', verbose=False) -> None:
+    def __init__(self, recipients:list, url='http://users.encs.concordia.ca/~cc/soen6441/', verbose=False) -> None:
         self.url = url
         self.frequency = 60
         self.last_hash = None
         self.verbose = verbose
+        self.email_client = EmailClient(recipients, verbose=self.verbose)
 
     def __log(self, message):
         if self.verbose:
@@ -42,15 +44,18 @@ class WebpageMonitor:
         TODO:
         """
 
-        # If no hash, get first hash and stop
-        if self.last_hash is None:
-            self.last_hash = self.get_hash()
-            return
-        else:
-            # Get new hash
+        try:
+            self.last_hash = env['LAST_HASH']
+            # Get updated hash of webpage
             new_hash = self.get_hash()
-
             # If new hash is different, print message and update last hash
             if new_hash != self.last_hash:
-                # TODO: Send email
-                pass
+                self.__log(f'Webpage change detected, sending email...')
+                self.email_client.send_email(f'Webpage change detected at {self.url} at {time.ctime()}')
+                
+
+        except KeyError:
+            self.__log('No website hash found in the environment variables. Setting hash...')
+            self.last_hash = self.get_hash()
+            os.system(f'heroku config -a soen6441-bot set LAST_HASH={self.last_hash}')
+            return
