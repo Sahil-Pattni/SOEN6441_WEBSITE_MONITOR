@@ -23,7 +23,7 @@ class WebpageMonitor:
         if self.verbose:
             print(f'LOG: {message}')
 
-    def get_hash(self):
+    def __get_hash(self):
         """
         Gets the hash from the specified webpage.
 
@@ -47,15 +47,17 @@ class WebpageMonitor:
         try:
             self.last_hash = env['LAST_HASH']
             # Get updated hash of webpage
-            new_hash = self.get_hash()
+            new_hash = self.__get_hash()
             # If new hash is different, print message and update last hash
             if new_hash != self.last_hash:
                 self.__log(f'Webpage change detected, sending email...')
                 self.email_client.send_email(f'Webpage change detected at {self.url} at {time.ctime()}')
+            else:
+                self.__log(f'No change detected at {time.ctime()}')
                 
 
         except KeyError:
             self.__log('No website hash found in the environment variables. Setting hash...')
-            self.last_hash = self.get_hash()
-            os.system(f'heroku config -a soen6441-bot set LAST_HASH={self.last_hash}')
+            self.last_hash = self.__get_hash()
+            os.system(f'heroku config:set -a SOEN6441-BOT LAST_HASH={self.last_hash}')
             return
