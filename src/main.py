@@ -10,4 +10,4 @@ if __name__ == '__main__':
     monitor = WebpageMonitor(recipients, verbose=True)
     # Run monitor
     monitor.monitor_webpage()
-    print('Monitored successfully.')
+    print('LOG: Monitored successfully.')
