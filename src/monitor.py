@@ -55,9 +55,8 @@ class WebpageMonitor:
             else:
                 self.__log(f'No change detected at {time.ctime()}')
                 
-
-        except KeyError:
+        except KeyError as e:
             self.__log('No website hash found in the environment variables. Setting hash...')
-            self.last_hash = self.__get_hash()
+            self.last_hash = new_hash
             os.system(f'heroku config:set -a soen6441-bot LAST_HASH={self.last_hash}')
             return
