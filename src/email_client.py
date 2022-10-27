@@ -25,3 +25,4 @@ class EmailClient:
             with smtplib.SMTP_SSL("smtp.gmail.com", self.port, context=context) as server:
                 server.login(self.sender_email, self.sender_password)
                 server.sendmail(self.sender_email, recipient, message)
+                self.__log(f'Sent email from {self.sender_email} to {recipient}')
