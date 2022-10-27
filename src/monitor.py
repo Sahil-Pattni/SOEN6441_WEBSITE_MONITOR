@@ -59,5 +59,5 @@ class WebpageMonitor:
         except KeyError:
             self.__log('No website hash found in the environment variables. Setting hash...')
             self.last_hash = self.__get_hash()
-            os.system(f'heroku config:set -a SOEN6441-BOT LAST_HASH={self.last_hash}')
+            os.system(f'heroku config:set -a soen6441-bot LAST_HASH={self.last_hash}')
             return
