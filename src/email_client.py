@@ -20,6 +20,7 @@ class EmailClient:
     def send_email(self, message):
         # Create a secure SSL context
         context = ssl.create_default_context()
+        self.__log('Sending emails...')
 
         for recipient in self.recipients:
             with smtplib.SMTP_SSL("smtp.gmail.com", self.port, context=context) as server:
