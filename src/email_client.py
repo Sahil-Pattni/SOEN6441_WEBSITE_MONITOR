@@ -17,7 +17,7 @@ class EmailClient:
         if self.verbose:
             print(f'LOG: {message}')
 
-    def send_email(self, message):
+    def send_email(self, message, subject='[SOEN 6441] Website Update'):
         """
         Sends an email to the recipients with the specified message.
         Args:
@@ -30,5 +30,11 @@ class EmailClient:
         for recipient in self.recipients:
             with smtplib.SMTP_SSL("smtp.gmail.com", self.port, context=context) as server:
                 server.login(self.sender_email, self.sender_password)
-                server.sendmail(self.sender_email, recipient, message)
+                msg = MIMEMultipart('alternative')
+                msg['Subject'] = subject
+                msg['From'] = self.sender_email
+                msg['To'] = recipient
+                message_text = message
+                msg.attach(MIMEText(f'<html><body>{message_text}</body></html>', 'html'))
+                server.sendmail(self.sender_email, recipient, msg.as_string())
                 self.__log(f'Sent email from {self.sender_email} to {recipient}')
