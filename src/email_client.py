@@ -18,6 +18,11 @@ class EmailClient:
             print(f'LOG: {message}')
 
     def send_email(self, message):
+        """
+        Sends an email to the recipients with the specified message.
+        Args:
+            message (str): The message to send.
+        """
         # Create a secure SSL context
         context = ssl.create_default_context()
         self.__log('Sending emails...')
