@@ -59,7 +59,7 @@ class WebpageMonitor:
             if new_hash != self.last_hash:
                 self.__log(f'Webpage change detected, sending email...')
                 
-                self.email_client.send_email(f'SOEN 6441 UPDATE: Webpage change detected at <a href="{self.url}">link text</a> at {time.ctime()}.')
+                self.email_client.send_email(f'SOEN 6441 UPDATE: Webpage change detected at <a href="{self.url}">SOEN 6441</a> at {time.ctime()}.')
                 self.__set_hash(new_hash)
                 
             else:
