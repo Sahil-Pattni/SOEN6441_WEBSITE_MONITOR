@@ -4,4 +4,4 @@ This is a website monitor that can monitor the status of a website and send emai
 
 ---
 ### Why did I create this?
-SOEN 6441 at Concordia uses their own website instead of Moodle, so emails are sent to notify students about new announcements or other updates to the page. This script runs every 10 minutes. If a change is detected, an email is sent to the recipient list individually.
+SOEN 6441 at Concordia uses their own website instead of Moodle, so emails are sent to notify students about new announcements or other updates to the page. This script runs once every day. If a change is detected, an email is sent to the recipient list individually.
